@@ -1,0 +1,119 @@
+<div class="p-2 container-md">
+  <ng-container *ngIf="weather$ | async as weather">
+    <div class="card mb-2" *ngIf="weather.rain.Success">
+      <div class="card-header">Rain</div>
+      <div class="card-body">
+        <div class="row">
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Air Temperature"
+            [value]="weather.rain.Rain.AirTemperature | number : '1.2-2'"
+            unit="&#8451;"
+            icon="bi-thermometer-half"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Humidity"
+            [value]="weather.rain.Rain.Humidity | number : '1.2-2'"
+            unit="%"
+            icon="bi-moisture"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Rain Intensity"
+            [value]="
+              weather.rain.Rain.RainIntensityMMPerHour | number : '1.2-2'
+            "
+            unit="mm"
+            icon="bi-cloud-rain"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="24 hour rainfall"
+            [value]="
+              weather.rain.Rain.RainAccumulationOver24Hours | number : '1.2-2'
+            "
+            unit="mm"
+            icon="bi-cloud-rain"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="7 day rainfall"
+            [value]="
+              weather.rain.Rain.RainAccumulationOver7Days | number : '1.2-2'
+            "
+            unit="mm"
+            icon="bi-cloud-rain"
+          ></weather-metric-card>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2" *ngIf="weather.wind.Success">
+      <div class="card-header">Wind</div>
+      <div class="card-body">
+        <div class="row">
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Wind"
+            [value]="weather.wind.Wind.WindSpeedActual | number : '1.2-2'"
+            unit="knts"
+            icon="bi-wind"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Gust"
+            [value]="weather.wind.Wind.WindGustActual | number : '1.2-2'"
+            unit="knts"
+            icon="bi-wind"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Direction (actual)"
+            [value]="weather.wind.Wind.WindDirectionActual | number : '1.2-2'"
+            icon="bi-compass"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Direction (compass)"
+            [value]="weather.wind.Wind.CompassDirection"
+            icon="bi-compass"
+          ></weather-metric-card>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2" *ngIf="weather.tide.Success">
+      <div class="card-header">Tide / Waves</div>
+      <div class="card-body">
+        <div class="row">
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Tide"
+            [value]="weather.tide.Tide.TideDefault | number : '1.2-2'"
+            unit="m"
+            icon="bi-water"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Sig Wave"
+            [value]="weather.wave.Wave.SignificantWaveHeight | number : '1.2-2'"
+            unit="m"
+            icon="bi-tsunami"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Mean Direction"
+            [value]="weather.wave.Wave.MeanTrueDirection | number : '1.2-2'"
+            icon="bi-compass"
+          ></weather-metric-card>
+          <weather-metric-card
+            class="col-6 col-md-3"
+            header="Peak Period"
+            [value]="weather.wave.Wave.PeakEnergyPeriod | number : '1.2-2'"
+            icon="bi-stopwatch"
+            unit="s"
+          ></weather-metric-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
