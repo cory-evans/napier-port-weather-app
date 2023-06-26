@@ -24,12 +24,12 @@
             [value]="
               weather.rain.Rain.RainIntensityMMPerHour | number : '1.2-2'
             "
-            unit="mm"
+            unit="mm/h"
             icon="bi-cloud-rain"
           ></weather-metric-card>
           <weather-metric-card
             class="col-6 col-md-3"
-            header="24 hour rainfall"
+            header="24 Hour Rainfall"
             [value]="
               weather.rain.Rain.RainAccumulationOver24Hours | number : '1.2-2'
             "
@@ -38,7 +38,7 @@
           ></weather-metric-card>
           <weather-metric-card
             class="col-6 col-md-3"
-            header="7 day rainfall"
+            header="7 Day Rainfall"
             [value]="
               weather.rain.Rain.RainAccumulationOver7Days | number : '1.2-2'
             "
