@@ -1,0 +1,22 @@
+<div class="container-md my-2">
+  <div style="max-height: 350px;">
+    <ngx-charts-area-chart
+      *ngIf="data$ | async as data"
+      [legend]="false"
+      [showXAxisLabel]="false"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [xAxisTicks]="data.ticks"
+      yAxisLabel="Speed (knts)"
+      [results]="data.data"
+      [animations]="true"
+      [autoScale]="false"
+    >
+    </ngx-charts-area-chart>
+  </div>
+</div>
+
+<div class="container-md my-2">
+  <app-compass-bearing-chart></app-compass-bearing-chart>
+</div>

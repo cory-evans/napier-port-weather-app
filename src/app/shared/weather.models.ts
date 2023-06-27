@@ -81,3 +81,12 @@ export interface JsonWeatherNow {
   WindLast20MinAvgGust: number;
   Wind: JsonWind;
 }
+
+export interface JsonWindHoursMinutes {
+  Success: boolean;
+  ErrorMessage: string;
+  Hours: number;
+  Minutes: number;
+  RecordCount: number;
+  WindData: JsonWind[];
+}

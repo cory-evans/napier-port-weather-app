@@ -6,6 +6,7 @@ import {
   ReplaySubject,
   forkJoin,
   interval,
+  of,
   shareReplay,
   switchMap,
   take,
@@ -17,6 +18,7 @@ import {
   JsonTideNow,
   JsonWaveNow,
   JsonWeatherNow,
+  JsonWindHoursMinutes,
   JsonWindNow,
 } from '../weather.models';
 
@@ -77,6 +79,14 @@ export class WeatherService {
 
   wind_now() {
     return this.get<JsonWindNow>('/wind/now');
+  }
+
+  private _wind_last_24_hours$ = this.get<JsonWindHoursMinutes>(
+    '/wind/lastday'
+  ).pipe(shareReplay(1));
+
+  wind_last_24_hours(): Observable<JsonWindHoursMinutes> {
+    return this._wind_last_24_hours$;
   }
 
   swell_now() {

@@ -1,0 +1,31 @@
+<svg viewBox="-25 -25 150 150">
+  <circle
+    [attr.cx]="radius"
+    [attr.cy]="radius"
+    [attr.r]="radius"
+    stroke="black"
+    stroke-width="1"
+    fill="none"
+  />
+
+  <g *ngFor="let d of directions">
+    <text
+      [attr.x]="radius + d.x * radius * 1.2"
+      [attr.y]="radius + d.y * radius * 1.2"
+      text-anchor="middle"
+      dominant-baseline="central"
+      font-size="7"
+    >
+      {{ d.name }}
+    </text>
+  </g>
+
+  <g *ngIf="polyline_points$ | async as points">
+    <polyline
+      [attr.points]="points"
+      stroke="black"
+      stroke-width="1"
+      fill="none"
+    ></polyline>
+  </g>
+</svg>
