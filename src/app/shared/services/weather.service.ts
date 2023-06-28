@@ -21,6 +21,7 @@ import {
   JsonWindHoursMinutes,
   JsonWindNow,
 } from '../weather.models';
+import { DateTime } from 'luxon';
 
 interface WeatherSubject {
   tide: JsonTideNow;
@@ -81,12 +82,12 @@ export class WeatherService {
     return this.get<JsonWindNow>('/wind/now');
   }
 
-  private _wind_last_24_hours$ = this.get<JsonWindHoursMinutes>(
-    '/wind/lastday'
-  ).pipe(shareReplay(1));
-
-  wind_last_24_hours(): Observable<JsonWindHoursMinutes> {
-    return this._wind_last_24_hours$;
+  wind(hours: number, minutes: number = 0): Observable<JsonWindHoursMinutes> {
+    return timer(0, 1000 * 60).pipe(
+      switchMap(() =>
+        this.get<JsonWindHoursMinutes>('/wind/' + hours + '/' + minutes)
+      )
+    );
   }
 
   swell_now() {

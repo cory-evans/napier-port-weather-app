@@ -1,31 +1,46 @@
-<svg viewBox="-25 -25 150 150">
-  <circle
-    [attr.cx]="radius"
-    [attr.cy]="radius"
-    [attr.r]="radius"
-    stroke="black"
-    stroke-width="1"
-    fill="none"
-  />
-
-  <g *ngFor="let d of directions">
-    <text
-      [attr.x]="radius + d.x * radius * 1.2"
-      [attr.y]="radius + d.y * radius * 1.2"
-      text-anchor="middle"
-      dominant-baseline="central"
-      font-size="7"
-    >
-      {{ d.name }}
-    </text>
-  </g>
-
-  <g *ngIf="polyline_points$ | async as points">
-    <polyline
-      [attr.points]="points"
+<div class="h-100 d-flex flex-column justify-content-center">
+  <svg viewBox="-15 -15 130 130">
+    <circle
+      [attr.cx]="radius"
+      [attr.cy]="radius"
+      [attr.r]="radius"
       stroke="black"
       stroke-width="1"
       fill="none"
-    ></polyline>
-  </g>
-</svg>
+    />
+
+    <g *ngFor="let d of directions">
+      <text
+        [attr.x]="radius + d.x * radius * 1.2"
+        [attr.y]="radius + d.y * radius * 1.2"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-size="7"
+      >
+        {{ d.name }}
+      </text>
+    </g>
+
+    <g *ngIf="current_dir_triangle_points$ | async as points">
+      <line
+        [attr.x1]="points[0].x"
+        [attr.y1]="points[0].y"
+        [attr.x2]="points[1].x"
+        [attr.y2]="points[1].y"
+        stroke="red"
+        stroke-width="1"
+        strok-linecap="round"
+      ></line>
+    </g>
+
+    <g *ngIf="polyline_points$ | async as points">
+      <polyline
+        [attr.points]="points"
+        stroke="black"
+        stroke-width="1"
+        stroke-linecap="round"
+        fill="none"
+      ></polyline>
+    </g>
+  </svg>
+</div>
