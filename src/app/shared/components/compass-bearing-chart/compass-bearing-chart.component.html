@@ -1,5 +1,28 @@
 <div class="h-100 d-flex flex-column justify-content-center">
   <svg viewBox="-15 -15 130 130">
+    <g>
+      <line
+        *ngFor="let s of segments"
+        [attr.x1]="radius"
+        [attr.y1]="radius"
+        [attr.x2]="radius + s.x"
+        [attr.y2]="radius + s.y"
+        stroke="#bababa"
+        stroke-width="0.5"
+        strok-linecap="round"
+      ></line>
+
+      <circle
+        *ngFor="let s of rings$ | async"
+        [attr.cx]="radius"
+        [attr.cy]="radius"
+        [attr.r]="s"
+        stroke="#bababa"
+        stroke-width="0.5"
+        fill="none"
+      ></circle>
+    </g>
+
     <circle
       [attr.cx]="radius"
       [attr.cy]="radius"
