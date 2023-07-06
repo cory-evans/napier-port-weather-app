@@ -1,31 +1,50 @@
-<div
-  class="container-md py-2"
-  [ngStyle]="{ 'height.px': (element_height$ | async) }"
->
-  <div style="height: 100%">
-    <ngx-charts-area-chart
-      *ngIf="data$ | async as data"
-      [scheme]="colorScheme"
-      [legend]="false"
-      [showXAxisLabel]="false"
-      [showYAxisLabel]="false"
-      [xAxis]="true"
-      [yAxis]="true"
-      [xAxisTicks]="data.ticks"
-      yAxisLabel="Speed (knts)"
-      [results]="data.data"
-      [animations]="true"
-      [autoScale]="false"
-    >
-    </ngx-charts-area-chart>
+<div class="bg-body-tertiary">
+  <div class="container-lg mx-auto">
+    <div class="d-flex justify-content-center fs-1">
+      <div *ngIf="latest_wind_data$ | async as latest" class="mx-4">
+        <span>{{ latest.WindSpeedActual | number : "1.2-2" }}</span>
+        <span class="text-primary">knts</span>
+      </div>
+      <div *ngIf="latest_wind_data$ | async as latest" class="mx-4">
+        <span>{{ latest.WindDirectionActual | number : "1.2-2" }}</span>
+        <span class="text-primary">&deg;</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<div
-  class="container-md py-2"
-  [ngStyle]="{ 'height.px': (element_height$ | async) }"
->
-  <app-compass-bearing-chart
-    [wind_data_to_use$]="wind_data_to_use$"
-  ></app-compass-bearing-chart>
+<div class="container-lg row mx-auto" *ngIf="element_size$ | async as size">
+  <div
+    class="col-6"
+    [ngStyle]="{ height: size.height }"
+    [ngClass]="{ 'col-12': (isPortrait$ | async) }"
+  >
+    <div style="height: 100%">
+      <ngx-charts-area-chart
+        *ngIf="data$ | async as data"
+        [scheme]="colorScheme"
+        [legend]="false"
+        [showXAxisLabel]="false"
+        [showYAxisLabel]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [xAxisTicks]="data.ticks"
+        yAxisLabel="Speed (knts)"
+        [results]="data.data"
+        [animations]="true"
+        [autoScale]="false"
+      >
+      </ngx-charts-area-chart>
+    </div>
+  </div>
+
+  <div
+    class="col-6"
+    [ngStyle]="{ height: size.height }"
+    [ngClass]="{ 'col-12': (isPortrait$ | async) }"
+  >
+    <app-compass-bearing-chart
+      [wind_data_to_use$]="wind_data_to_use$"
+    ></app-compass-bearing-chart>
+  </div>
 </div>

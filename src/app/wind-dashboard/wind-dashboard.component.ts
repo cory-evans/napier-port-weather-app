@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Color, ScaleType } from '@stoick/ngx-15-charts';
 import { WeatherService } from '../shared/services/weather.service';
-import { Subject, map, shareReplay, tap } from 'rxjs';
+import { Subject, combineLatest, map, shareReplay, tap } from 'rxjs';
 
 import { DateTime } from 'luxon';
 import { ClientWindowSizeService } from '../shared/services/client-window-size.service';
@@ -22,6 +22,11 @@ export class WindDashboardComponent {
     map((windData) => windData.reverse()),
     shareReplay(1)
   );
+
+  latest_wind_data$ = this.wind_data_to_use$.pipe(
+    map((windData) => windData[windData.length - 1])
+  );
+
   data$ = this.wind_data_to_use$.pipe(
     map((windData) => {
       const latest = DateTime.fromISO(
@@ -64,11 +69,29 @@ export class WindDashboardComponent {
 
   element_height$ = this.clientWindowSizeService.size$.pipe(
     map((size) => size.height - this.nav_height),
-    map((height) => (height / 2) - 1)
+    map((height) => height / 2 - 1)
+  );
+
+  isPortrait$ = this.clientWindowSizeService.isPortrait$;
+
+  element_size$ = combineLatest([
+    this.clientWindowSizeService.size$,
+    this.clientWindowSizeService.isPortrait$,
+  ]).pipe(
+    map(([size, isPortrait]) => {
+      const height = size.height - this.nav_height;
+      const width = size.width;
+
+      if (isPortrait) {
+        return { height: height / 2 + 'px', width: '100%' };
+      } else {
+        return { height: '100%', width: width / 2 + 'px' };
+      }
+    })
   );
 
   colorScheme: string | Color = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
+    domain: ['#0d6efd'],
     selectable: false,
     group: ScaleType.Linear,
     name: 'cool',

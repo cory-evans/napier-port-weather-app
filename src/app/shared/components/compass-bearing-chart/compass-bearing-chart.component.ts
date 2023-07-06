@@ -73,6 +73,7 @@ export class CompassBearingChartComponent implements OnInit {
     this.rings$ = this.wind_data_to_use$?.pipe(
       map((windData) => {
         const place_ring_every_x_minutes = 60;
+        const now = DateTime.local();
 
         const last = windData[windData.length - 1];
         const first = windData[0];
@@ -81,16 +82,15 @@ export class CompassBearingChartComponent implements OnInit {
         const last_reading = DateTime.fromISO(last.DateReading);
         const first_reading = DateTime.fromISO(first.DateReading);
 
-        const diff = last_reading.diff(first_reading, ['minutes']);
+        const diff = now.diff(first_reading, ['minutes']);
 
         const noOfRings = Math.ceil(diff.minutes / place_ring_every_x_minutes);
-        const offset =
-          (diff.minutes % place_ring_every_x_minutes) / this.radius;
+        const offset = (diff.minutes % place_ring_every_x_minutes) / noOfRings;
 
         const gap = this.radius / noOfRings;
 
         return Array.from({ length: noOfRings }, (_, i) => i).map((i) => {
-          return this.radius - (i * gap + offset);
+          return i * gap + offset;
         });
       }),
       map((rings) => {

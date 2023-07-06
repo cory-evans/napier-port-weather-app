@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,10 @@ export class ClientWindowSizeService {
 
   public get size$() {
     return this.current_size$.asObservable();
+  }
+
+  public get isPortrait$() {
+    return this.current_size$.pipe(map((size) => size.height > size.width));
   }
 
   public set_size(width: number, height: number) {
