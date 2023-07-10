@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { NgxChartsModule } from '@stoick/ngx-15-charts';
 import { WindDashboardComponent } from './wind-dashboard/wind-dashboard.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, WindDashboardComponent],
@@ -20,6 +21,8 @@ import { WindDashboardComponent } from './wind-dashboard/wind-dashboard.componen
     NgbModule,
     SharedModule,
     NgxChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

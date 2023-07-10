@@ -1,10 +1,20 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Color, ScaleType } from '@stoick/ngx-15-charts';
 import { WeatherService } from '../shared/services/weather.service';
-import { Subject, combineLatest, map, shareReplay, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  combineLatest,
+  map,
+  shareReplay,
+  tap,
+} from 'rxjs';
 
 import { DateTime } from 'luxon';
 import { ClientWindowSizeService } from '../shared/services/client-window-size.service';
+import { NoSleepService } from '../shared/services/no-sleep.service';
+import NoSleep from 'nosleep.js';
 
 @Component({
   selector: 'app-wind-dashboard',
@@ -64,7 +74,8 @@ export class WindDashboardComponent {
 
   constructor(
     private api: WeatherService,
-    private clientWindowSizeService: ClientWindowSizeService
+    private clientWindowSizeService: ClientWindowSizeService,
+    private nosleepService: NoSleepService
   ) {}
 
   element_height$ = this.clientWindowSizeService.size$.pipe(
@@ -96,4 +107,19 @@ export class WindDashboardComponent {
     group: ScaleType.Linear,
     name: 'cool',
   };
+
+  noSleepEnabled = false;
+  toggleNoSleep() {
+    setTimeout(() => {
+      if (this.noSleepEnabled) {
+        this.nosleepService.enable();
+      } else {
+        this.nosleepService.disable();
+      }
+
+      setTimeout(() => {
+        this.noSleepEnabled = this.nosleepService.noSleep.isEnabled;
+      }, 250);
+    }, 1);
+  }
 }

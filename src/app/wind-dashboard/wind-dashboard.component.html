@@ -1,6 +1,6 @@
 <div class="bg-body-tertiary">
   <div class="container-lg mx-auto">
-    <div class="d-flex justify-content-center fs-1">
+    <div class="d-flex justify-content-center fs-1 position-relative">
       <div *ngIf="latest_wind_data$ | async as latest" class="mx-4">
         <span>{{ latest.WindSpeedActual | number : "1.2-2" }}</span>
         <span class="text-primary">knts</span>
@@ -8,6 +8,25 @@
       <div *ngIf="latest_wind_data$ | async as latest" class="mx-4">
         <span>{{ latest.WindDirectionActual | number : "1.2-2" }}</span>
         <span class="text-primary">&deg;</span>
+      </div>
+
+      <div class="position-absolute h-100 top-0 end-0">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="form-check form-switch fs-6" (click)="toggleNoSleep()">
+            <input
+              type="checkbox"
+              name="noSleep"
+              id="no-sleep-toggle"
+              class="form-check-input"
+              role="switch"
+              [(ngModel)]="noSleepEnabled"
+            />
+            <!-- TODO: add label below toggle -->
+            <!-- <label for="no-sleep-toggle" class="form-check-label"
+              >No Sleep</label
+            > -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
